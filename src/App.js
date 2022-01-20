@@ -1,4 +1,5 @@
-import react, { Component } from "react";
+import React, { Component } from "react";
+import ContactList from "./Contacts";
 
 class App extends Component {
   state = {
@@ -12,8 +13,23 @@ class App extends Component {
     name: "",
     number: "",
   };
+
+  deleteContact = (contactid) => {
+    this.setState((prewState) => ({
+      contacts: prewState.contacts.filter((c) => c.id !== contactid),
+    }));
+  };
+
   render() {
-    return <></>;
+    const { contacts } = this.state;
+    return (
+      <div>
+        <h1>Phonebook</h1>
+
+        <h2>Contacts</h2>
+        <ContactList contacts={contacts} onDeleteContact={this.deleteContact} />
+      </div>
+    );
   }
 }
 
