@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import ContactList from "./Contacts";
+import ContactList from "./ContactList";
+import ContactForm from "./ContactForm";
 
 class App extends Component {
   state = {
@@ -10,8 +11,6 @@ class App extends Component {
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
     filter: "",
-    name: "",
-    number: "",
   };
 
   deleteContact = (contactid) => {
@@ -20,12 +19,14 @@ class App extends Component {
     }));
   };
 
+  formSubmit = (e) => {};
+
   render() {
     const { contacts } = this.state;
     return (
       <div>
         <h1>Phonebook</h1>
-
+        <ContactForm onSubmit={this.formSubmit} />
         <h2>Contacts</h2>
         <ContactList contacts={contacts} onDeleteContact={this.deleteContact} />
       </div>
