@@ -1,10 +1,15 @@
 import React, { Component } from "react";
+import { nanoid } from "nanoid";
+import style from "./form.module.css";
 
 class ContactForm extends Component {
   state = {
     name: "",
     number: "",
   };
+
+  nameId = nanoid();
+  telId = nanoid();
 
   onInputChange = (e) => {
     const { name, value } = e.currentTarget;
@@ -25,8 +30,8 @@ class ContactForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmitForm}>
-        <label htmlFor="">
+      <form className={style.form} onSubmit={this.onSubmitForm}>
+        <label htmlFor={this.nameId}>
           Name:{" "}
           <input
             type="text"
@@ -38,7 +43,7 @@ class ContactForm extends Component {
             required
           />
         </label>
-        <label htmlFor="">
+        <label htmlFor={this.telId}>
           Number:{" "}
           <input
             type="tel"

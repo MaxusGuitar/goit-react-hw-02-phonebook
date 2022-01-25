@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ContactList from "./ContactList";
 import ContactForm from "./ContactForm";
+import FindContact from "./FindContact";
+import style from "./App.css";
+const shortid = require("shortid");
 
 class App extends Component {
   state = {
@@ -19,16 +22,51 @@ class App extends Component {
     }));
   };
 
-  formSubmit = (e) => {};
+  addContact = ({ name, number }) => {
+    if (
+      this.state.contacts.find(
+        (contact) => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
+    const c = {
+      id: shortid.generate(),
+      name,
+      number,
+    };
+    this.setState(() => ({
+      contacts: [c, ...this.state.contacts],
+    }));
+  };
+
+  contactFind = (e) => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+
+  getVisibleContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter((c) =>
+      c.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
 
   render() {
-    const { contacts } = this.state;
+    const contactsFind = this.getVisibleContacts();
+
     return (
       <div>
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.formSubmit} />
+        <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <ContactList contacts={contacts} onDeleteContact={this.deleteContact} />
+        <FindContact filter={this.state.filter} change={this.contactFind} />
+        <ContactList
+          contacts={contactsFind}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
