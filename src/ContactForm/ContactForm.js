@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import { nanoid } from "nanoid";
 import style from "./form.module.css";
+import propTypes from "prop-types";
 
 class ContactForm extends Component {
   state = {
     name: "",
     number: "",
   };
-
-  nameId = nanoid();
-  telId = nanoid();
 
   onInputChange = (e) => {
     const { name, value } = e.currentTarget;
@@ -31,7 +28,7 @@ class ContactForm extends Component {
   render() {
     return (
       <form className={style.form} onSubmit={this.onSubmitForm}>
-        <label htmlFor={this.nameId}>
+        <label htmlFor={this.name}>
           Name:{" "}
           <input
             type="text"
@@ -43,7 +40,7 @@ class ContactForm extends Component {
             required
           />
         </label>
-        <label htmlFor={this.telId}>
+        <label htmlFor={this.number}>
           Number:{" "}
           <input
             type="tel"
@@ -60,5 +57,9 @@ class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  onSubmit: propTypes.func,
+};
 
 export default ContactForm;
